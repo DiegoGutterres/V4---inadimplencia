@@ -14,12 +14,17 @@ options.add_argument(CHROME_PROFILE_PATH)
 driver = webdriver.Chrome(options=options)
 driver.get("https://app.contaazul.com/#/financeiro/contas-a-receber?view=revenue&amp;source=Financeiro%20%3E%20Contas%20a%20Receber&source=Menu%20Principal")
 
+#planilha
+data = pd.read_excel('Results.xlsx')
+print(data.head)
+clientes = data['name']
+
 #inicio da automação
 while True:
     try:
         control = driver.find_element(By.XPATH, '//*[@id="statement-list-container"]/table[1]/tbody')
         if (control):
-            time.sleep(1)
+            time.sleep(3)
             break
     except:
         time.sleep(2)
@@ -77,12 +82,34 @@ driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[2]/ul/li[1]/a').
 time.sleep(3)
 
 #ir para dois dias a frente
-driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
-time.sleep(1)
-driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
-time.sleep(1)
+controle = date.today().weekday()
+
+if controle == 4:
+    driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
+    time.sleep(1)
+    driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
+    time.sleep(1)
+    driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
+    time.sleep(1)
+else:
+    driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
+    time.sleep(1)
+    driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
+    time.sleep(1)
+
+#abrir todos
+while True:
+    try:
+        driver.find_element(By.XPATH, '//*[@id="conteudo"]/div/div[2]/div[2]/div/div[3]/button').click()
+        time.sleep(3)
+    except:
+        break
 
 #pesquisar
 def search(cliente):
-    driver.find_element(By.XPATH, '//*[@id="textSearch"]').send_keys(cliente)
-        
+    searchbox = driver.find_element(By.XPATH, '//*[@id="textSearch"]')
+    searchbox.send_keys(cliente)
+
+for i in range(len(clientes)):
+    cliente = clientes[i]
+    print(cliente)
