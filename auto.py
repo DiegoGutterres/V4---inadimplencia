@@ -105,11 +105,30 @@ while True:
     except:
         break
 
+#skip
+def carregando():
+    while True:
+        loading = driver.find_element(By.XPATH, '//*[@id="loading"]').get_attribute('style')
+        if loading == 'display: block;':
+            time.sleep(3)
+        else:
+            break
+
+
 #pesquisar
 def search(cliente):
-    searchbox = driver.find_element(By.XPATH, '//*[@id="textSearch"]')
-    searchbox.send_keys(cliente)
+    pesquisar = driver.find_element(By.XPATH, '//*[@id="textSearch"]')
+    pesquisar.send_keys(Keys.CONTROL, 'a', Keys.DELETE)
+    try:
+        pesquisar.send_keys(cliente)
+        pesquisar.send_keys(Keys.ENTER)
+        carregando()
+    except:
+        return
+    
+
 
 for i in range(len(clientes)):
     cliente = clientes[i]
-    print(cliente)
+    search(cliente)
+    
