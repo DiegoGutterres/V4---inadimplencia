@@ -126,6 +126,19 @@ def search(cliente):
     except:
         return
     
+    #abrir
+    try:
+        driver.find_element(By.XPATH, '//*[@id="statement-list-container"]/table[1]/tbody/tr[1]/td[4]/div[1]/span[1]').click()
+        time.sleep(3)
+    except KeyError:
+        print('none')
+        return
+    
+    #trocar conta pra inad
+    conta = driver.find_element(By.XPATH, '//*[@id="newIdConta"]')
+    conta.click()
+    conta.send_keys(Keys.CONTROL, 'A', Keys.DELETE)
+    conta.send_keys('01.2 CLIENTE INADIMPLENTE')
 
 
 for i in range(len(clientes)):
