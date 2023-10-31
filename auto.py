@@ -114,7 +114,6 @@ def carregando():
         else:
             break
 
-
 #pesquisar
 def search(cliente):
     pesquisar = driver.find_element(By.XPATH, '//*[@id="textSearch"]')
@@ -130,8 +129,9 @@ def search(cliente):
     try:
         driver.find_element(By.XPATH, '//*[@id="statement-list-container"]/table[1]/tbody/tr[1]/td[4]/div[1]/span[1]').click()
         time.sleep(3)
-    except KeyError:
+    except:
         print('none')
+        time.sleep(1)
         return
     
     #trocar conta pra inad
@@ -139,9 +139,17 @@ def search(cliente):
     conta.click()
     conta.send_keys(Keys.CONTROL, 'A', Keys.DELETE)
     conta.send_keys('01.2 CLIENTE INADIMPLENTE')
+    time.sleep(2)
+    driver.find_element(By.XPATH, '//*[@id="financeiro_memo"]').click()
+    time.sleep(1)
 
+    #salvar
+    driver.find_element(By.XPATH, '//*[@id="finance-save-options"]/div[1]/button[2]').click()
+    print(cliente)
+    carregando()
 
 for i in range(len(clientes)):
     cliente = clientes[i]
     search(cliente)
     
+driver.quit()
