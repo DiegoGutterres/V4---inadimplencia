@@ -1,7 +1,6 @@
 import time
 import pandas as pd
 
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -85,12 +84,15 @@ time.sleep(3)
 controle = date.today().weekday()
 
 if controle == 4:
-    driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
-    time.sleep(1)
-    driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
-    time.sleep(1)
-    driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
-    time.sleep(1)
+    for i in range(6):
+        driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
+        time.sleep(1)
+  
+elif controle == 5:
+    for i in range(5):
+        driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
+        time.sleep(1)
+
 else:
     driver.find_element(By.XPATH, '//*[@id="financeTopFilters"]/div[4]/a[2]/i').click()
     time.sleep(1)
@@ -145,6 +147,14 @@ def search(cliente):
 
     #salvar
     driver.find_element(By.XPATH, '//*[@id="finance-save-options"]/div[1]/button[2]').click()
+    time.sleep(1)
+
+    try:
+        #popup dps de clicar pra salvar
+        driver.find_element(By.XPATH, '//*[@id="newPopupManagerReplacement"]/div[3]/a[1]').click()
+    except:
+        pass
+
     print(cliente)
     carregando()
 
