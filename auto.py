@@ -10,11 +10,12 @@ from datetime import date
 #driver
 options = webdriver.ChromeOptions()
 options.add_argument(CHROME_PROFILE_PATH)
+#options.add_argument("--headless")
 driver = webdriver.Chrome(options=options)
 driver.get("https://app.contaazul.com/#/financeiro/contas-a-receber?view=revenue&amp;source=Financeiro%20%3E%20Contas%20a%20Receber&source=Menu%20Principal")
 
 #planilha
-data = pd.read_excel('Results.xlsx')
+data = pd.read_excel('inad05-12.xlsx')
 print(data.head)
 clientes = data['name']
 
